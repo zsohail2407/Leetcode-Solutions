@@ -11,29 +11,34 @@
  */
 class Solution {
 public:
-vector<int> ordered;
-    void inorder(TreeNode* root)
+    TreeNode* aaa(TreeNode* current, int k)
     {
-        if(root==nullptr)
+        while(current!=nullptr)
         {
-            return;
+            if(current->val==k)
+            {
+                return current;
+            }
+            else if(current->val>k){current=current->left;}
+            else {current=current->right;}
         }
-        inorder(root->left);
-        ordered.push_back(root->val);
-        inorder(root->right);
+        return nullptr;
+    }
+
+    bool aaaa2(TreeNode* a, TreeNode* root,int k)
+    {
+        if(a==nullptr)
+        {
+            return false;
+        }
+        TreeNode* abc=aaa(root,k-a->val);
+        if(abc && abc!=a)
+        {
+            return true;
+        }
+        return aaaa2(a->left,root,k)||aaaa2(a->right,root,k);
     }
     bool findTarget(TreeNode* root, int k) {
-        inorder(root);
-        for(int i=0;i<ordered.size();i++)
-        {
-            for(int j=i+1;j<ordered.size();j++)
-            {
-              if(ordered[i]+ordered[j]==k)
-              {
-                return true;
-              }
-            }
-        }
-        return false;
+        return aaaa2(root, root, k);
     }
 };
